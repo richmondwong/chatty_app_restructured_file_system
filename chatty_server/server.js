@@ -1,12 +1,6 @@
-// const express = require('express');
-// const SocketServer = require('ws').Server;
-// const uuid = require('uuid/v4')
-
-
 const express = require('express');
 const WebSocket = require('ws')
 const SocketServer = WebSocket.Server;
-// const SocketServer = require('ws').Server;
 const uuid = require('uuid/v4')
 
 // Set the port to 3001
@@ -18,18 +12,15 @@ const server = express()
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-const app = express()
+const app = express();
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
-
+// Store both messages and notifications to be sent over to client side
 const messageDatabase = [];
 
+// Broadcast data as JSON object and to all clients connected to the server
 wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
 
 wss.broadcast = data => {
@@ -40,20 +31,17 @@ wss.broadcast = data => {
   });
 };
 
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
+//Broadcasts number of connected clients to all clients. Also recieves data from client side
+// and parses it so that it can be determined whether it is a notification or message.
+// Depending on whether they are a POSTed notificaiton or POSTed message, they are categorized
+// as an incomingMessage (if so, then it gets a UUID) or incomingNotification.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  console.log("This is wss clients: ", wss.clients.size)
-  var clientsConnected = wss.clients.size
-  wss.broadcastJSON(clientsConnected)
+  var clientsConnected = wss.clients.size;
+  wss.broadcastJSON(clientsConnected);
 
  ws.on('message', data => {
-    console.log(`Got message from the client ${data}`);
-    var convertedBackToJSON = JSON.parse(data)
-    console.log(`This is user ${convertedBackToJSON.username} sending message of ${convertedBackToJSON.content}`)
-
+    var convertedBackToJSON = JSON.parse(data);
 
     switch (convertedBackToJSON.type){
       case 'postMessage':
@@ -64,38 +52,25 @@ wss.on('connection', (ws) => {
           type: "incomingMessage"
           };
         messageDatabase.push(objectToBroadcast);
-        wss.broadcastJSON(objectToBroadcast)
+        wss.broadcastJSON(objectToBroadcast);
         break;
       case 'postNotification':
         const objectToBroadcastTwo = {
           content: convertedBackToJSON.content,
           type: "incomingNotification"
         }
-        messageDatabase.push(objectToBroadcastTwo)
-        wss.broadcastJSON(objectToBroadcastTwo)
-        console.log("This is OTB2: ", objectToBroadcastTwo)
+        messageDatabase.push(objectToBroadcastTwo);
+        wss.broadcastJSON(objectToBroadcastTwo);
         break;
       default:
-        throw new Error ("Some error happened")
+        throw new Error ("Some error happened");
     }
   });
 
-
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  // ws.on('close', () => console.log('Client disconnected')
-  //   console.log("This is wss clients: ", wss.clients.size)
-  //   );
-
+// Close the connection. Also broadcasts changes in thh number of connect clients.
   ws.on('close', function(){
-    console.log('Client disconnected')
-    wss.broadcastJSON(wss.clients.size)
-    console.log("This is wss clients: ", wss.clients.size)
+    console.log('Client disconnected');
+    wss.broadcastJSON(wss.clients.size);
   }
     );
-
-  // ws.send('something');
 });
-
-// server.listen(PORT, () => {
-//   console.log(`Server is listening on port ${PORT}`);
-// });

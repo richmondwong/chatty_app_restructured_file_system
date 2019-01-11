@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 export class Navbar extends Component {
   render(){
     return (
@@ -12,6 +11,6 @@ export class Navbar extends Component {
         <span className="online-users"><b>Users Currently Online: {this.props.currentUsersOnline}</b></span>
         </div>
       </nav>
-  )
+    )
   }
 }

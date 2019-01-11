@@ -31,16 +31,12 @@ export class ChatBar extends Component {
   onKeyUpUser = e => {
     if (e.keyCode === 13){
       this.props.addUser(this.state.username)
-      // this.setState({ username: "" })
     }
   }
 
   render(){
     return (
-
       <footer className="chatbar">
-
-      {/*  <form onKeyUp={this.onKeyUp} >*/}
           <input
             className="chatbar-username"
             placeholder="Your Name (Optional)"
@@ -56,8 +52,6 @@ export class ChatBar extends Component {
             onChange={this.onChange}
             placeholder="Type a message and hit ENTER"
           />
-   {/*     </form>*/}
-
       </footer>
       )
   }
