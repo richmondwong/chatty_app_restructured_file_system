@@ -19,14 +19,9 @@ Clone the boilerplate and create your own git repo.
 
 ### Screenshots
 
-This boilerplate project includes React ESLint configuration.
+Screenshot showing 5 users connected, with name change notifications and messages.
 
-
-!["Screenshot"]()
-
-!["Screenshot"]()
-
-!["Screenshot"]()
+!["chatty_screenshot.png"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_screenshot.png)
 
 ### Dependencies
 
