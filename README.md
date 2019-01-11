@@ -21,7 +21,7 @@ Clone the boilerplate and create your own git repo.
 
 Screenshot showing 5 users connected, with name change notifications and messages.
 
-!["chatty_screenshot.png"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_screenshot.png)
+!["Screenshot showing chatty app"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_screenshot.png)
 
 ### Dependencies
 
