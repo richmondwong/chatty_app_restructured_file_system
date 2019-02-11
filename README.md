@@ -1,3 +1,8 @@
+
+!["GIF showing chatty app"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_one.gif)
+!["GIF showing chatty app"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_two.gif)
+!["GIF showing chatty app"](https://github.com/richmondwong/chatty_app_restructured_file_system/blob/master/docs/chatty_three.gif)
+
 # Chatty
 
 A minimal and light version of Slack and other real-time chat apps.
